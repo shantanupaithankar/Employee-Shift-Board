@@ -12,5 +12,12 @@ export default defineConfig({
     },
     server: {
         port: 3000,
+        // Enable SPA fallback for client-side routing
+        // This fixes 404 errors when refreshing pages like /admin or /dashboard
+        open: true,
+        strictPort: false,
+    },
+    preview: {
+        port: 3000,
     },
 })
