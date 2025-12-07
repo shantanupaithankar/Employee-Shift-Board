@@ -7,7 +7,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login, isAdmin } = useAuth();
+    const { login } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -16,9 +16,9 @@ const Login: React.FC = () => {
         setLoading(true);
 
         try {
-            await login({ email, password });
-            // Redirect based on role
-            if (isAdmin()) {
+            const response = await login({ email, password });
+            // Redirect based on role from the response (not from state which may not be updated yet)
+            if (response.user.role === 'admin') {
                 navigate('/admin');
             } else {
                 navigate('/dashboard');

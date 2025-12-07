@@ -6,8 +6,8 @@ interface AuthContextType {
     user: AuthResponse['user'] | null;
     token: string | null;
     loading: boolean;
-    login: (credentials: LoginCredentials) => Promise<void>;
-    register: (data: RegisterData) => Promise<void>;
+    login: (credentials: LoginCredentials) => Promise<AuthResponse>;
+    register: (data: RegisterData) => Promise<AuthResponse>;
     logout: () => void;
     isAdmin: () => boolean;
     isAuthenticated: () => boolean;
@@ -52,6 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(response.user);
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        return response;
     };
 
     const register = async (data: RegisterData) => {
@@ -60,6 +61,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setUser(response.user);
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
+        return response;
     };
 
     const logout = () => {
