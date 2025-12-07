@@ -46,6 +46,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = async (credentials: LoginCredentials) => {
         const response = await authApi.login(credentials);
+        console.log('Login response:', response);
+        console.log('User role:', response.user.role);
         setToken(response.token);
         setUser(response.user);
         localStorage.setItem('token', response.token);

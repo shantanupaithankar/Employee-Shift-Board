@@ -8,7 +8,9 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requireAdmin = false }) => {
-    const { isAuthenticated, isAdmin, loading } = useAuth();
+    const { isAuthenticated, isAdmin, loading, user } = useAuth();
+
+    console.log('ProtectedRoute - requireAdmin:', requireAdmin, 'isAdmin:', isAdmin(), 'user:', user);
 
     if (loading) {
         return (
@@ -24,10 +26,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requireAdmin 
     }
 
     if (!isAuthenticated()) {
+        console.log('Not authenticated, redirecting to login');
         return <Navigate to="/login" replace />;
     }
 
     if (requireAdmin && !isAdmin()) {
+        console.log('Admin required but user is not admin, redirecting to dashboard');
         return <Navigate to="/dashboard" replace />;
     }
 
